@@ -126,7 +126,6 @@ function insertText(newText, charactersToRemove) {
         selection.modify("extend", "backward", "character");
       }
     }
-    return;
     
     // Same concern as above; the selection *could* have no ranges.
     var range = selection.getRangeAt(0);
