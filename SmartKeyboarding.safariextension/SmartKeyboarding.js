@@ -118,11 +118,14 @@ function insertText(newText, charactersToRemove) {
     // if we are going to delete characters (e.g. the first hyphen in a
     // double-hyphen), select them.
     if (charactersToRemove) {
+      // Because *selection.modify()* moves the focus and not the anchor,
+      // we have to make sure the selection is backward (the focus should
+      // be at the start)
+      var range = selection.getRangeAt(0);
+      // *end* is the end, regardless of whether that's the focus or anchor
+      selection.collapseToEnd();
+      selection.extend(range.startContainer, range.startOffset);
       for (var i = charactersToRemove; i > 0; i--) {
-        // FIXME: if the selection is collapsed or is a backward selection
-        // (i.e. the focus is before the anchor), this is all good. BUT if
-        // the focus is *after* the anchor, modify moves the *focus.* Need
-        // to rejigger to detect and fix that case.
         selection.modify("extend", "backward", "character");
       }
     }
