@@ -58,6 +58,12 @@ document.addEventListener('keypress', function(event) {
       backspace = 1;
     }
   }
+  // default behavior for `ctrl+-` is to do nothing, but we want that to
+  // insert a normal dash and not do the above em-dash behavior.
+  // Also: no clue why ctrl+- gets us an "information separator" char.
+  else if (event.charCode === 31 && ctrl && !shift) {
+    replacement = "-";
+  }
   
   if (replacement) {
     event.preventDefault();
