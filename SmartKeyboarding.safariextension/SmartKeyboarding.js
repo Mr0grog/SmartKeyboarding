@@ -11,7 +11,7 @@ document.addEventListener('keypress', function(event) {
   var element = event.target;
   
   // Bail out if not in a text editing area.
-  if (element.nodeName !== "INPUT" && element.nodeName !== "TEXTAREA" && !element.isContentEditable) {
+  if (!isAcceptableTarget(element)) {
     return;
   }
   
@@ -152,6 +152,12 @@ function insertText(newText, charactersToRemove) {
     selection.removeAllRanges();
     selection.addRange(range);
   }
+}
+
+function isAcceptableTarget(target) {
+  return target.nodeName === "INPUT" ||
+    target.nodeName === "TEXTAREA" ||
+    target.isContentEditable;
 }
 
 
