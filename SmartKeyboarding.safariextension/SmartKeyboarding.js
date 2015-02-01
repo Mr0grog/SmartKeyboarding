@@ -155,9 +155,16 @@ function insertText(newText, charactersToRemove) {
 }
 
 function isAcceptableTarget(target) {
-  return target.nodeName === "INPUT" ||
+  return (
+    (target.nodeName === "INPUT" &&
+      // Try and avoid search boxes, where straight quotes are often meaningful
+      input.type !== "search" &&
+      input.name !== "q" &&
+      input.id.indexOf("search") === -1 &&
+      input.className.indexOf("search") === -1) ||
     target.nodeName === "TEXTAREA" ||
-    target.isContentEditable;
+    target.isContentEditable
+  );
 }
 
 
